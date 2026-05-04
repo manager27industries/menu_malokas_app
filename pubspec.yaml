@@ -31,6 +31,9 @@ dependencies:
   # Visor de modelos 3D (.GLB) en Android y Web
   model_viewer_plus: ^1.10.0
 
+  # Renderizado de SVG
+  flutter_svg: ^2.0.10+1
+
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
@@ -46,5 +49,6 @@ flutter:
   assets:
     - assets/images/
     - assets/images/img/
+    - assets/images/svg/
     - assets/data/
     - assets/pdf/

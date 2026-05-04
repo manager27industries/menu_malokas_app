@@ -27,74 +27,96 @@ class _InfoPanel extends StatelessWidget {
           topRight: topRadius,
         ),
       ),
-      child: SingleChildScrollView(
-        padding: EdgeInsets.only(
-          top: roundedTop ? AppSpacing.xl : AppSpacing.xxl,
-          left: AppSpacing.xl,
-          right: AppSpacing.xl,
-          bottom: AppSpacing.xl,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (roundedTop)
-              Center(
-                child: Container(
-                  width: 40,
-                  height: 4,
-                  margin: const EdgeInsets.only(bottom: AppSpacing.lg),
-                  decoration: BoxDecoration(
-                    color: AppColors.divider,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
+      child: Stack(
+        clipBehavior: Clip.hardEdge,
+        children: [
+          Positioned.fill(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.only(
+                top: roundedTop ? AppSpacing.xl : AppSpacing.xxl,
+                left: AppSpacing.xl,
+                right: AppSpacing.xl,
+                bottom: AppSpacing.xl,
               ),
-            if (!roundedTop)
-              Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _FloatingBackButton(dark: true),
-                  const Spacer(),
-                  const LanguageToggleButton(),
+                  if (roundedTop)
+                    Center(
+                      child: Container(
+                        width: 40,
+                        height: 4,
+                        margin: const EdgeInsets.only(bottom: AppSpacing.lg),
+                        decoration: BoxDecoration(
+                          color: AppColors.divider,
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
+                    ),
+                  if (!roundedTop)
+                    Row(
+                      children: [
+                        _FloatingBackButton(dark: true),
+                        const Spacer(),
+                        const LanguageToggleButton(),
+                      ],
+                    ),
+                  if (!roundedTop) const SizedBox(height: AppSpacing.lg),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.sm + 4,
+                      vertical: AppSpacing.xs + 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.sandLight,
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
+                    ),
+                    child: Text(
+                      dish.category.toUpperCase(),
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        fontSize: 11,
+                        letterSpacing: 1.5,
+                        color: AppColors.coffeeDark,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  Text(t.name, style: theme.textTheme.headlineLarge),
+                  const SizedBox(height: AppSpacing.md),
+                  Container(
+                    width: 56,
+                    height: 2,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [AppColors.earth, AppColors.coffeeDark],
+                      ),
+                      borderRadius: BorderRadius.circular(1),
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.lg),
+                  Text(t.fullDescription, style: theme.textTheme.bodyLarge),
+                  const SizedBox(height: AppSpacing.lg),
+                  if (dish.has3dModel) _Badge3DHint(),
                 ],
               ),
-            if (!roundedTop) const SizedBox(height: AppSpacing.lg),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.sm + 4,
-                vertical: AppSpacing.xs + 2,
-              ),
-              decoration: BoxDecoration(
-                color: AppColors.sandLight,
-                borderRadius: BorderRadius.circular(AppRadius.sm),
-              ),
-              child: Text(
-                dish.category.toUpperCase(),
-                style: theme.textTheme.labelMedium?.copyWith(
-                  fontSize: 11,
-                  letterSpacing: 1.5,
-                  color: AppColors.coffeeDark,
+            ),
+          ),
+          // Decoración: planta saliendo de la esquina inferior derecha
+          Positioned(
+            bottom: -40,
+            right: -40,
+            child: IgnorePointer(
+              child: SvgPicture.asset(
+                'assets/images/svg/platas.svg',
+                width: 200,
+                colorFilter: ColorFilter.mode(
+                  AppColors.darkGreen.withValues(alpha: 0.10),
+                  BlendMode.srcIn,
                 ),
               ),
             ),
-            const SizedBox(height: AppSpacing.md),
-            Text(t.name, style: theme.textTheme.headlineLarge),
-            const SizedBox(height: AppSpacing.md),
-            Container(
-              width: 56,
-              height: 2,
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [AppColors.earth, AppColors.coffeeDark],
-                ),
-                borderRadius: BorderRadius.circular(1),
-              ),
-            ),
-            const SizedBox(height: AppSpacing.lg),
-            Text(t.fullDescription, style: theme.textTheme.bodyLarge),
-            const SizedBox(height: AppSpacing.lg),
-            if (dish.has3dModel) _Badge3DHint(),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

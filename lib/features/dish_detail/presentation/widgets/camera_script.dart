@@ -1,4 +1,4 @@
-/// Script JS inyectado en <model-viewer> para la animación de cámara en espiral.
+/// Script JS inyectado en model-viewer para la animación de cámara en espiral.
 ///
 /// Ciclo:
 ///  1. Descenso suave desde cenital (phi 10°) a horizontal (phi 75°) — ~10 s
