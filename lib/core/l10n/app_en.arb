@@ -1,0 +1,13 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Raíces",
+  "menuTitle": "Our Menu",
+  "allCategories": "All",
+  "dishDetailTitle": "Dish Detail",
+  "downloadMenu": "Download Menu",
+  "downloadError": "Could not open the menu PDF",
+  "languageButton": "ES",
+  "loading": "Loading…",
+  "errorLoadingMenu": "Error loading the menu"
+}

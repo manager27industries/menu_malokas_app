@@ -1,0 +1,30 @@
+{
+  "@@locale": "es",
+
+  "appTitle": "Raíces",
+  "@appTitle": { "description": "Nombre de la app / restaurante" },
+
+  "menuTitle": "Nuestro Menú",
+  "@menuTitle": { "description": "Título de la pantalla principal del menú" },
+
+  "allCategories": "Todos",
+  "@allCategories": { "description": "Chip para mostrar todas las categorías" },
+
+  "dishDetailTitle": "Detalle del plato",
+  "@dishDetailTitle": { "description": "Título de la pantalla de detalle" },
+
+  "downloadMenu": "Descargar Menú",
+  "@downloadMenu": { "description": "Tooltip del botón flotante de PDF" },
+
+  "downloadError": "No se pudo abrir el menú PDF",
+  "@downloadError": { "description": "Mensaje de error al abrir el PDF" },
+
+  "languageButton": "EN",
+  "@languageButton": { "description": "Label del botón para cambiar a inglés" },
+
+  "loading": "Cargando…",
+  "@loading": { "description": "Texto de carga genérico" },
+
+  "errorLoadingMenu": "Error al cargar el menú",
+  "@errorLoadingMenu": { "description": "Mensaje cuando falla la carga del JSON" }
+}

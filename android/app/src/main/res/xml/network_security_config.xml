@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Permite HTTP cleartext a 127.0.0.1 — requerido por model_viewer_plus
+     cuyo servidor HTTP local usa http://127.0.0.1:<puerto>/ para servir el GLB -->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">127.0.0.1</domain>
+    </domain-config>
+</network-security-config>

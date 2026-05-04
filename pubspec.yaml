@@ -1,0 +1,50 @@
+name: menu_malokas
+description: "App de menú digital para Raíces — restaurante premium."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # Estado
+  flutter_riverpod: ^2.6.1
+
+  # Navegación
+  go_router: ^14.6.3
+
+  # Tipografías
+  google_fonts: ^6.2.1
+
+  # Abrir PDF del menú
+  url_launcher: ^6.3.1
+
+  # Persistir idioma seleccionado
+  shared_preferences: ^2.3.3
+
+  # Visor de modelos 3D (.GLB) en Android y Web
+  model_viewer_plus: ^1.10.0
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+# Generación de código l10n
+flutter:
+  generate: true
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/images/img/
+    - assets/data/
+    - assets/pdf/
