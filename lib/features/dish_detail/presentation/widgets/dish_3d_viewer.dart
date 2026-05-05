@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
@@ -86,9 +87,14 @@ class _Dish3DViewerState extends State<Dish3DViewer> {
   }
 
   Widget _buildViewer() {
+    // En Flutter web los assets se sirven en assets/assets/… (doble prefijo).
+    // model-viewer hace una petición HTTP directa, sin pasar por el asset
+    // bundle de Flutter, por lo que hay que corregir la ruta manualmente.
+    final src = kIsWeb ? 'assets/${widget.glbAssetPath}' : widget.glbAssetPath;
+
     try {
       return ModelViewer(
-        src: widget.glbAssetPath,
+        src: src,
         alt: '${widget.dishName} — modelo 3D interactivo',
         backgroundColor: const Color(0xFF1A1714),
         // Posición inicial cenital — el JS la toma y arranca el bucle espiral

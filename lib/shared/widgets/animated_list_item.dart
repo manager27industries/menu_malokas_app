@@ -14,7 +14,7 @@ class AnimatedListItem extends StatefulWidget {
     super.key,
     required this.index,
     required this.child,
-    this.delayBase = const Duration(milliseconds: 200),
+    this.delayBase = const Duration(milliseconds: 20),
   });
 
   final int index;
@@ -39,23 +39,24 @@ class _AnimatedListItemState extends State<AnimatedListItem>
     super.initState();
     _ctrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 450),
+      duration: const Duration(milliseconds: 220),
     );
 
     _fade = Tween<double>(begin: 0.0, end: 1.0)
         .animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOut));
 
-    _scale = Tween<double>(begin: 0.80, end: 1.0)
-        .animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOutBack));
+    _scale = Tween<double>(begin: 0.94, end: 1.0)
+        .animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOut));
 
-    // Slide vertical pequeño — funciona dentro del ListView sin recorte
+    // Slide vertical mínimo para scroll rápido
     _slide = Tween<Offset>(
-      begin: const Offset(0, 0.12),
+      begin: const Offset(0, 0.06),
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOutCubic));
 
-    // Delay escalonado: cada ítem espera index * delayBase antes de animar
-    Future.delayed(widget.delayBase * widget.index, () {
+    // Stagger máx 2 ítems (40 ms) — el resto aparece casi al instante
+    final clampedIndex = widget.index.clamp(0, 2);
+    Future.delayed(widget.delayBase * clampedIndex, () {
       if (mounted) _ctrl.forward();
     });
   }

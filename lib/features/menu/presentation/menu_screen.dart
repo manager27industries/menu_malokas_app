@@ -20,30 +20,60 @@ class MenuScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 72,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Raíces Restaurante',
-              style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                fontSize: 22,
-                letterSpacing: 1.2,
-                fontWeight: FontWeight.w600,
-                  ),
+        toolbarHeight: 84,
+        titleSpacing: 0,
+        automaticallyImplyLeading: false,
+        title: Builder(builder: (context) {
+          final screenW = MediaQuery.sizeOf(context).width;
+          final maxW = screenW > 900
+              ? (screenW * 0.86).clamp(0.0, 960.0)
+              : 680.0;
+          return Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: maxW),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.screenPaddingMobile),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Raíces Restaurante',
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge
+                                ?.copyWith(
+                                  fontSize: 24,
+                                  letterSpacing: 1.2,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                          const SizedBox(height: 3),
+                          Text(
+                            'Menú digital',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontSize: 11,
+                                  letterSpacing: 2.0,
+                                  color: const Color(0xFFB7906C),
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const LanguageToggleButton(),
+                  ],
+                ),
+              ),
             ),
-            const SizedBox(height: 2),
-            Text(
-              'Menú digital',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: 11,
-                letterSpacing: 1.8,
-                    color: const Color(0xFFB7906C),
-                  ),
-            ),
-          ],
-        ),
+          );
+        }),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
           child: Container(
@@ -60,10 +90,6 @@ class MenuScreen extends ConsumerWidget {
             ),
           ),
         ),
-        actions: const [
-          LanguageToggleButton(),
-          SizedBox(width: AppSpacing.sm),
-        ],
       ),
       floatingActionButton: const PdfFab(),
       body: menuAsync.when(

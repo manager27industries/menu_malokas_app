@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "14865542987",
+    "project_id": "menu-malokas",
+    "storage_bucket": "menu-malokas.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14865542987:android:b2c0bb80d4230e54f042ce",
+        "android_client_info": {
+          "package_name": "com.example.menu_malokas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMEJ_1R8-LyHFJGD52eo-V39Sv7ufggLI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -138,17 +138,19 @@ class _Badge3DHint extends StatelessWidget {
         ),
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.view_in_ar_rounded,
               size: 16, color: AppColors.darkGreen),
           const SizedBox(width: AppSpacing.xs + 2),
-          Text(
-            'Modelo 3D interactivo - arrastra para rotar',
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: AppColors.darkGreen,
-                  fontSize: 12,
-                ),
+          Flexible(
+            child: Text(
+              'Modelo 3D interactivo · arrastra para rotar',
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    color: AppColors.darkGreen,
+                    fontSize: 12,
+                  ),
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ],
       ),

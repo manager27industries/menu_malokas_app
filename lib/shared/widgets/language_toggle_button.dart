@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/constants/app_colors.dart';
 import '../../core/providers/locale_provider.dart';
 
 /// Botón en el AppBar que alterna el idioma entre ES ↔ EN.
@@ -10,7 +9,7 @@ class LanguageToggleButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = ref.watch(localeProvider).valueOrNull ?? const Locale('es');
-    final label = locale.languageCode == 'es' ? 'EN' : 'ES';
+    final isSpanish = locale.languageCode == 'es';
 
     return InkWell(
       onTap: () => ref.read(localeProvider.notifier).toggle(),
@@ -20,20 +19,14 @@ class LanguageToggleButton extends ConsumerWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.language_rounded,
-              size: 16,
-              color: AppColors.earth,
+            Opacity(
+              opacity: isSpanish ? 1.0 : 0.35,
+              child: const Text('🇨🇴', style: TextStyle(fontSize: 22)),
             ),
-            const SizedBox(width: 5),
-            Text(
-              label,
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 12,
-                letterSpacing: 0.8,
-                color: AppColors.textSecondary,
-              ),
+            const SizedBox(width: 6),
+            Opacity(
+              opacity: isSpanish ? 0.35 : 1.0,
+              child: const Text('🇺🇸', style: TextStyle(fontSize: 22)),
             ),
           ],
         ),

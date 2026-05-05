@@ -1,16 +1,20 @@
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/app_config.dart';
 import '../../../core/constants/app_spacing.dart';
+import '../../../core/providers/locale_provider.dart';
+import 'pdf_providers.dart';
+import 'pdf_viewer_dialog.dart';
+import 'pdf_viewer_mobile_dialog.dart';
 
-/// FAB premium para abrir el menú PDF.
+/// FAB premium para abrir el menú PDF desde Firebase Storage.
 ///
-/// Incluye un pulse suave (escala 1.0 → 1.04) que se repite cada 3 s para
-/// llamar la atención sin resultar molesto.
+/// Obtiene la URL de descarga vigente vía [pdfUrlProvider] y la abre:
+///   • Android → Google Docs Viewer (dentro de la app)
+///   • Web     → nueva pestaña del navegador
 class PdfFab extends ConsumerStatefulWidget {
   const PdfFab({super.key});
 
@@ -33,8 +37,6 @@ class _PdfFabState extends ConsumerState<PdfFab>
     _pulseAnim = Tween<double>(begin: 1.0, end: 1.04).animate(
       CurvedAnimation(parent: _pulseCtrl, curve: Curves.easeInOut),
     );
-
-    // Pulso cada 3 s: forward → reverse → espera
     _schedulePulse();
   }
 
@@ -54,23 +56,41 @@ class _PdfFabState extends ConsumerState<PdfFab>
     super.dispose();
   }
 
-  Future<void> _openPdf() async {
-    final uri = Uri.parse(AppConfig.menuPdfUrl);
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+  Future<void> _openPdf(String lang) async {
+    late final String url;
+    try {
+      url = await ref.refresh(pdfUrlProvider(lang).future);
+    } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('No se pudo abrir el menú PDF')),
+          const SnackBar(
+              content: Text('El menú PDF aún no está disponible.')),
         );
       }
+      return;
+    }
+
+    if (!mounted) return;
+
+    final title = lang == 'en' ? 'PDF Menu' : 'Menú PDF';
+    if (kIsWeb) {
+      await PdfViewerDialog.show(context, url: url, title: title);
+    } else {
+      await PdfViewerMobileDialog.show(context, url: url, title: title);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final lang = ref.watch(localeProvider).valueOrNull?.languageCode ?? 'es';
+    final label = lang == 'en' ? 'PDF Menu' : 'Menú PDF';
+    // Pre-carga la URL para que esté lista al tocar
+    ref.watch(pdfUrlProvider(lang));
+
     return ScaleTransition(
       scale: _pulseAnim,
       child: GestureDetector(
-        onTap: _openPdf,
+        onTap: () => _openPdf(lang),
         child: Container(
           height: 56,
           padding: const EdgeInsets.symmetric(horizontal: 22),
@@ -97,9 +117,9 @@ class _PdfFabState extends ConsumerState<PdfFab>
                 ),
               ),
               const SizedBox(width: 10),
-              const Text(
-                'Menú PDF',
-                style: TextStyle(
+              Text(
+                label,
+                style: const TextStyle(
                   color: AppColors.textOnDark,
                   fontSize: 14,
                   fontWeight: FontWeight.w600,

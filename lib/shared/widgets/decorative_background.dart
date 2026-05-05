@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/constants/app_colors.dart';
 
-/// Widget decorativo reutilizable que pinta formas orgánicas (hojas/curvas)
+/// Widget decorativo reutilizable que posiciona motivos tropicales SVG
 /// en las esquinas del fondo — opacidad muy baja para no interferir con
 /// el contenido.
 ///
-/// Uso:
+/// Uso (dentro de un Stack):
 /// ```dart
 /// Stack(children: [
 ///   const DecorativeBackground(),
@@ -34,90 +35,62 @@ class DecorativeBackground extends StatelessWidget {
     if (!enabled) return const SizedBox.shrink();
 
     final baseColor = (color ?? AppColors.darkGreen).withValues(alpha: opacity);
+    final filterSimple = ColorFilter.mode(baseColor, BlendMode.srcIn);
 
     return Positioned.fill(
       child: IgnorePointer(
-        child: CustomPaint(
-          painter: _OrganicShapesPainter(color: baseColor),
+        child: Stack(
+          clipBehavior: Clip.hardEdge,
+          children: [
+            // ── Top-left: planta 1 (platas — fill negro, srcIn funciona) ──
+            Positioned(
+              top: -40,
+              left: -30,
+              child: Transform.rotate(
+                angle: 0.3,
+                child: SvgPicture.asset(
+                  'assets/images/svg/platas.svg',
+                  width: 220,
+                  colorFilter: filterSimple,
+                ),
+              ),
+            ),
+
+            // ── Bottom-right: planta 2 (ramita — SVG con colores, usar Opacity) ──
+            Positioned(
+              bottom: -30,
+              right: -30,
+              child: Opacity(
+                opacity: opacity,
+                child: Transform.rotate(
+                  angle: -0.4,
+                  child: SvgPicture.asset(
+                    'assets/images/svg/planta2.svg',
+                    width: 200,
+                  ),
+                ),
+              ),
+            ),
+
+            // ── Bottom-left: planta 3 (hoja — SVG con colores, usar Opacity) ──
+            Positioned(
+              bottom: -20,
+              left: -20,
+              child: Opacity(
+                opacity: opacity,
+                child: Transform.rotate(
+                  angle: 0.5,
+                  child: SvgPicture.asset(
+                    'assets/images/svg/planta3.svg',
+                    width: 180,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class _OrganicShapesPainter extends CustomPainter {
-  const _OrganicShapesPainter({required this.color});
-
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.fill;
-
-    // ── Hoja top-right ────────────────────────────────────────────────────
-    _drawLeaf(
-      canvas,
-      paint,
-      center: Offset(size.width + 10, -20),
-      width: 130,
-      height: 200,
-      rotation: -0.6,
-    );
-
-    // ── Hoja bottom-left ──────────────────────────────────────────────────
-    _drawLeaf(
-      canvas,
-      paint,
-      center: Offset(-20, size.height + 10),
-      width: 110,
-      height: 180,
-      rotation: 2.4,
-    );
-
-    // ── Círculo difuminado top-left (elemento sutil de fondo) ─────────────
-    _drawBlob(
-      canvas,
-      paint,
-      center: Offset(size.width * 0.08, size.height * 0.12),
-      radius: 70,
-    );
-  }
-
-  /// Dibuja una forma de hoja (bezier cúbico simétrico).
-  void _drawLeaf(
-    Canvas canvas,
-    Paint paint, {
-    required Offset center,
-    required double width,
-    required double height,
-    required double rotation,
-  }) {
-    canvas.save();
-    canvas.translate(center.dx, center.dy);
-    canvas.rotate(rotation);
-
-    final path = Path();
-    final hw = width / 2;
-    final hh = height / 2;
-
-    path.moveTo(0, -hh);
-    path.cubicTo(hw, -hh * 0.5, hw, hh * 0.5, 0, hh);
-    path.cubicTo(-hw, hh * 0.5, -hw, -hh * 0.5, 0, -hh);
-    path.close();
-
-    canvas.drawPath(path, paint);
-    canvas.restore();
-  }
-
-  /// Dibuja un círculo difuso (blob) con Paint de bajo alpha para refuerzo.
-  void _drawBlob(Canvas canvas, Paint paint,
-      {required Offset center, required double radius}) {
-    canvas.drawCircle(center, radius, paint);
-  }
-
-  @override
-  bool shouldRepaint(_OrganicShapesPainter oldDelegate) =>
-      oldDelegate.color != color;
-}

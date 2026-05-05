@@ -16,7 +16,9 @@ class _DetailContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final isWide = size.width > 720;
+    // > 900 px → landscape tablet / web escritorio
+    // ≤ 900 px → portrait tablet / móvil  → layout apilado
+    final isWide = size.width > 900;
 
     return Scaffold(
       backgroundColor: const Color(0xFF0D0D0D),

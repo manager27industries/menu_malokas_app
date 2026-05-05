@@ -34,6 +34,15 @@ dependencies:
   # Renderizado de SVG
   flutter_svg: ^2.0.10+1
 
+  # Supabase — Auth + Storage
+  supabase_flutter: ^2.8.4
+
+  # Selector de archivo PDF para el admin
+  file_picker: ^11.0.0
+
+  # Visor web embebido (para PDF en móvil nativo)
+  webview_flutter: ^4.10.0
+
   cupertino_icons: ^1.0.8
 
 dev_dependencies:

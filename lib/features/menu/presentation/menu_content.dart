@@ -18,38 +18,49 @@ class MenuContent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final dishes = state.filtered;
+    final screenW = MediaQuery.sizeOf(context).width;
+    final maxW = screenW > 900
+        ? (screenW * 0.86).clamp(0.0, 960.0)
+        : 680.0;
 
     return Stack(
       children: [
-        // Formas orgánicas decorativas de fondo
+        // Formas orgánicas decorativas de fondo (fondo completo)
         const DecorativeBackground(opacity: 0.06),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Divider(height: 1),
-            Expanded(
-              child: ListView.separated(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.screenPaddingMobile,
-                  vertical: AppSpacing.lg,
-                ),
-                itemCount: dishes.length,
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: AppSpacing.md),
-                itemBuilder: (context, i) {
-                  final dish = dishes[i];
-                  return AnimatedListItem(
-                    index: i,
-                    child: DishCard(
-                      dish: dish,
-                      lang: lang,
-                      onTap: () => context.go('/menu/${dish.id}'),
+        // Contenido centrado con ancho máximo para tablet/web
+        Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: maxW),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Divider(height: 1),
+                Expanded(
+                  child: ListView.separated(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.screenPaddingMobile,
+                      vertical: AppSpacing.lg,
                     ),
-                  );
-                },
-              ),
+                    itemCount: dishes.length,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: AppSpacing.md),
+                    itemBuilder: (context, i) {
+                      final dish = dishes[i];
+                      return AnimatedListItem(
+                        index: i,
+                        child: DishCard(
+                          dish: dish,
+                          lang: lang,
+                          onTap: () => context.go('/menu/${dish.id}'),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ],
     );
