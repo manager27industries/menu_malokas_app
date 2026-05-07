@@ -89,11 +89,13 @@ class _AdminPanel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isMobile = MediaQuery.sizeOf(context).width < 600;
+
     return SafeArea(
       child: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.xl,
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? AppSpacing.md : AppSpacing.xl,
             vertical: AppSpacing.xl,
           ),
           child: ConstrainedBox(
@@ -171,29 +173,46 @@ class _AdminPanel extends ConsumerWidget {
                 ),
                 const SizedBox(height: AppSpacing.xl),
 
-                // ── Tarjetas lado a lado ──────────────────────────────
-                const IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                // ── Tarjetas: columna en móvil, fila en desktop ───────
+                if (isMobile)
+                  const Column(
                     children: [
-                      Expanded(
-                        child: PdfUploaderCard(
-                          langCode: 'es',
-                          flag: '🇨🇴',
-                          label: 'Menú en Español',
-                        ),
+                      PdfUploaderCard(
+                        langCode: 'es',
+                        flag: '🇨🇴',
+                        label: 'Menú en Español',
                       ),
-                      SizedBox(width: AppSpacing.md),
-                      Expanded(
-                        child: PdfUploaderCard(
-                          langCode: 'en',
-                          flag: '🇺🇸',
-                          label: 'Menú en Inglés',
-                        ),
+                      SizedBox(height: AppSpacing.md),
+                      PdfUploaderCard(
+                        langCode: 'en',
+                        flag: '🇺🇸',
+                        label: 'Menú en Inglés',
                       ),
                     ],
+                  )
+                else
+                  const IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(
+                          child: PdfUploaderCard(
+                            langCode: 'es',
+                            flag: '🇨🇴',
+                            label: 'Menú en Español',
+                          ),
+                        ),
+                        SizedBox(width: AppSpacing.md),
+                        Expanded(
+                          child: PdfUploaderCard(
+                            langCode: 'en',
+                            flag: '🇺🇸',
+                            label: 'Menú en Inglés',
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
               ],
             ),
           ),

@@ -186,7 +186,7 @@ class _DishCardState extends State<DishCard>
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         // Categoría — label pequeño tierra
                         Text(
@@ -224,13 +224,15 @@ class _DishCardState extends State<DishCard>
                           ),
                         ),
                         // Descripción corta
-                        Text(
-                          t.shortDescription,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            height: 1.45,
+                        Flexible(
+                          child: Text(
+                            t.shortDescription,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              height: 1.45,
+                            ),
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),

@@ -43,6 +43,12 @@ dependencies:
   # Visor web embebido (para PDF en móvil nativo)
   webview_flutter: ^4.10.0
 
+  # Visor de PDF nativo (sin WebView) — Android, iOS, Web
+  pdfx: ^2.9.0
+
+  # HTTP para descargar PDF en web (pdfx web solo acepta bytes)
+  http: ^1.2.2
+
   cupertino_icons: ^1.0.8
 
 dev_dependencies:

@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/constants/app_colors.dart';
@@ -8,7 +7,6 @@ import '../../../core/constants/app_spacing.dart';
 import '../../../core/providers/locale_provider.dart';
 import 'pdf_providers.dart';
 import 'pdf_viewer_dialog.dart';
-import 'pdf_viewer_mobile_dialog.dart';
 
 /// FAB premium para abrir el menú PDF desde Firebase Storage.
 ///
@@ -73,19 +71,16 @@ class _PdfFabState extends ConsumerState<PdfFab>
     if (!mounted) return;
 
     final title = lang == 'en' ? 'PDF Menu' : 'Menú PDF';
-    if (kIsWeb) {
-      await PdfViewerDialog.show(context, url: url, title: title);
-    } else {
-      await PdfViewerMobileDialog.show(context, url: url, title: title);
-    }
+    await PdfViewerDialog.show(context, url: url, title: title);
   }
 
   @override
   Widget build(BuildContext context) {
     final lang = ref.watch(localeProvider).valueOrNull?.languageCode ?? 'es';
     final label = lang == 'en' ? 'PDF Menu' : 'Menú PDF';
-    // Pre-carga la URL para que esté lista al tocar
-    ref.watch(pdfUrlProvider(lang));
+    // Pre-carga la URL para que esté lista al tocar y calienta caché en web.
+    final pdfUrlAsync = ref.watch(pdfUrlProvider(lang));
+    pdfUrlAsync.whenData(PdfViewerDialog.warmupWebPdf);
 
     return ScaleTransition(
       scale: _pulseAnim,

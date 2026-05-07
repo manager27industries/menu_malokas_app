@@ -1,12 +1,13 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:pdfx/pdfx.dart';
 
 import '../../../core/constants/app_colors.dart';
-import 'pdf_viewer_impl_stub.dart'
-    // ignore: uri_does_not_exist
-    if (dart.library.html) 'pdf_viewer_impl_web.dart';
+import 'pdf_web_embed_stub.dart' if (dart.library.html) 'pdf_web_embed.dart';
 
-/// Panel flotante que renderiza un PDF con un <iframe> (solo web).
-/// Se muestra centrado con esquinas redondeadas, dejando visible el fondo.
+/// Panel flotante que renderiza un PDF de forma nativa con pdfx.
+/// Funciona en Android, iOS y Web sin WebView ni iframe.
 class PdfViewerDialog extends StatefulWidget {
   const PdfViewerDialog({super.key, required this.url, required this.title});
 
@@ -25,29 +26,60 @@ class PdfViewerDialog extends StatefulWidget {
     );
   }
 
+  static Future<void> warmupWebPdf(String url) {
+    return _PdfViewerDialogState.warmupWebPdf(url);
+  }
+
   @override
   State<PdfViewerDialog> createState() => _PdfViewerDialogState();
 }
 
 class _PdfViewerDialogState extends State<PdfViewerDialog> {
-  late final String _viewId;
+  PdfControllerPinch? _controller;
+
+  static Future<void> warmupWebPdf(String url) async {
+    // No-op: en web usamos el visor nativo del navegador con carga progresiva.
+  }
 
   @override
   void initState() {
     super.initState();
-    _viewId = 'pdf-viewer-${widget.url.hashCode.abs()}';
-    registerPdfView(_viewId, widget.url);
+    if (!kIsWeb) {
+      _controller = PdfControllerPinch(
+        document: _openNativeDocument(widget.url),
+      );
+    }
+  }
+
+  static Future<PdfDocument> _openNativeDocument(String source) async {
+    final uri = Uri.tryParse(source);
+    final isRemote = uri != null &&
+        (uri.scheme.toLowerCase() == 'http' ||
+            uri.scheme.toLowerCase() == 'https');
+
+    if (isRemote) {
+      final response = await http.get(uri);
+      if (response.statusCode >= 400) {
+        throw Exception('No se pudo descargar el PDF (${response.statusCode}).');
+      }
+      return PdfDocument.openData(response.bodyBytes);
+    }
+
+    return PdfDocument.openFile(source);
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-
     final isMobile = size.width < 600;
     final hPad = isMobile ? 8.0 : size.width * 0.04;
     final vPad = isMobile ? 12.0 : size.height * 0.04;
-    final dialogW = size.width - hPad * 2;
-    final dialogH = size.height - vPad * 2;
 
     return Dialog(
       backgroundColor: Colors.transparent,
@@ -58,8 +90,8 @@ class _PdfViewerDialogState extends State<PdfViewerDialog> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(isMobile ? 12 : 16),
         child: SizedBox(
-          width: dialogW,
-          height: dialogH,
+          width: size.width - hPad * 2,
+          height: size.height - vPad * 2,
           child: Column(
             children: [
               // ── Barra de título ──────────────────────────────────────
@@ -69,11 +101,8 @@ class _PdfViewerDialogState extends State<PdfViewerDialog> {
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Row(
                   children: [
-                    const Icon(
-                      Icons.picture_as_pdf_rounded,
-                      color: AppColors.textOnDark,
-                      size: 18,
-                    ),
+                    const Icon(Icons.picture_as_pdf_rounded,
+                        color: AppColors.textOnDark, size: 18),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
@@ -86,6 +115,24 @@ class _PdfViewerDialogState extends State<PdfViewerDialog> {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
+                    // ── Indicador de página ──────────────────────────
+                    if (!kIsWeb && _controller != null)
+                      PdfPageNumber(
+                        controller: _controller!,
+                        builder: (_, loadingState, page, pagesCount) {
+                          if (loadingState != PdfLoadingState.success) {
+                            return const SizedBox.shrink();
+                          }
+                          return Text(
+                            '$page / $pagesCount',
+                            style: const TextStyle(
+                              color: AppColors.textOnDark,
+                              fontSize: 12,
+                            ),
+                          );
+                        },
+                      ),
+                    const SizedBox(width: 8),
                     IconButton(
                       icon: const Icon(Icons.close_rounded,
                           color: AppColors.textOnDark, size: 20),
@@ -97,8 +144,34 @@ class _PdfViewerDialogState extends State<PdfViewerDialog> {
                   ],
                 ),
               ),
-              // ── iframe PDF ───────────────────────────────────────────
-              Expanded(child: buildPdfView(_viewId)),
+
+              // ── Visor PDF nativo ─────────────────────────────────────
+              Expanded(
+                child: kIsWeb
+                    ? PdfWebEmbedView(url: widget.url)
+                    : PdfViewPinch(
+                        controller: _controller!,
+                        scrollDirection: Axis.vertical,
+                        maxScale: 20.0,
+                        builders: PdfViewPinchBuilders<DefaultBuilderOptions>(
+                          options: const DefaultBuilderOptions(),
+                          documentLoaderBuilder: (_) => const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.darkGreen,
+                            ),
+                          ),
+                          pageLoaderBuilder: (_) => const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.darkGreen,
+                            ),
+                          ),
+                          errorBuilder: (_, error) => Center(
+                            child: Text('Error: $error',
+                                style: const TextStyle(color: Colors.red)),
+                          ),
+                        ),
+                      ),
+              ),
             ],
           ),
         ),
