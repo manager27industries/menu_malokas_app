@@ -97,6 +97,7 @@ class _NarrowLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenH = MediaQuery.sizeOf(context).height;
+    final topSafe = MediaQuery.paddingOf(context).top;
 
     return Stack(
       children: [
@@ -129,19 +130,33 @@ class _NarrowLayout extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: MediaQuery.paddingOf(context).top + AppSpacing.sm,
+          top: topSafe + AppSpacing.sm,
           left: AppSpacing.md,
-          child: _FloatingBackButton(),
-        ),
-        Positioned(
-          top: MediaQuery.paddingOf(context).top + AppSpacing.sm,
           right: AppSpacing.md,
           child: Container(
-            decoration: BoxDecoration(
-              color: Colors.black54,
-              borderRadius: BorderRadius.circular(AppRadius.sm),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.xs,
+              vertical: AppSpacing.xs,
             ),
-            child: const LanguageToggleButton(),
+            decoration: BoxDecoration(
+              color: AppColors.background.withValues(alpha: 0.92),
+              borderRadius: BorderRadius.circular(AppRadius.md),
+              border: Border.all(color: AppColors.divider),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x1A000000),
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+            child: const Row(
+              children: [
+                _FloatingBackButton(dark: true),
+                Spacer(),
+                LanguageToggleButton(),
+              ],
+            ),
           ),
         ),
       ],

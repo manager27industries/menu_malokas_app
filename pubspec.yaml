@@ -49,6 +49,9 @@ dependencies:
   # HTTP para descargar PDF en web (pdfx web solo acepta bytes)
   http: ^1.2.2
 
+  # APIs web (reemplazo de dart:html)
+  web: ^1.1.1
+
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
