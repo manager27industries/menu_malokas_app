@@ -14,6 +14,7 @@ class MenuRepository {
     final list = json['dishes'] as List<dynamic>;
     return list
         .map((e) => Dish.fromJson(e as Map<String, dynamic>))
+        .where((dish) => dish.has3dModel)
         .toList(growable: false);
   }
 }

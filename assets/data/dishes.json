@@ -1,4 +1,4 @@
-{
+﻿{
   "dishes": [
     {
       "id": "desayuno_guatemalteco",
@@ -39,25 +39,6 @@
       }
     },
     {
-      "id": "filet_mignon",
-      "category": "Principales",
-      "imagePath": "assets/images/img/06-TITULO-FILET-MINON@2x.png",
-      "has3dModel": true,
-      "glbAssetPath": "assets/images/04-Filete-minon.glb",
-      "translations": {
-        "es": {
-          "name": "Filet Mignon",
-          "shortDescription": "El corte más noble de la res, sellado al punto exacto con mantequilla de hierbas.",
-          "fullDescription": "La cima de la parrilla. Medallón de lomo fino de exportación, sellado en plancha de hierro fundido con mantequilla clarificada, romero fresco y ajo. Término a elección del comensal. Acompañado de papa gratinada al estilo Dauphinois, salsa de pimienta verde y espárragos a la parrilla. Una experiencia de carne que no se olvida."
-        },
-        "en": {
-          "name": "Filet Mignon",
-          "shortDescription": "The most noble beef cut, seared to perfection with herb butter.",
-          "fullDescription": "The pinnacle of the grill. Export-grade beef tenderloin medallion, seared on a cast iron skillet with clarified butter, fresh rosemary and garlic. Cooked to the guest's preference. Accompanied by Dauphinois-style gratin potato, green peppercorn sauce and grilled asparagus. A beef experience that stays with you."
-        }
-      }
-    },
-    {
       "id": "punta_de_anca",
       "category": "Principales",
       "imagePath": "assets/images/img/07-TITULO-PUNTA-DE-ANCA@2x.png",
@@ -73,44 +54,6 @@
           "name": "Argentine Coulotte",
           "shortDescription": "Premium export-grade Argentine beef, 300g or 600g with daily side dishes.",
           "fullDescription": "Made with the finest export-grade beef, this dish can be ordered in a 300-gram or 600-gram portion, accompanied by house green salad and two additional daily side dishes. The Argentine Coulotte is characterized by its fat cap that gives it exceptional juiciness and a deep, unmatched flavor in every bite."
-        }
-      }
-    },
-    {
-      "id": "posta_de_bagre",
-      "category": "Principales",
-      "imagePath": "assets/images/img/10-TITULO-POSTA-DE-BAGRE@2x.png",
-      "has3dModel": true,
-      "glbAssetPath": "assets/images/07-Posta-de-bagre.glb",
-      "translations": {
-        "es": {
-          "name": "Posta de Bagre",
-          "shortDescription": "Bagre del río preparado en cazuela con sofrito de la casa y hierbas del trópico.",
-          "fullDescription": "Un tributo al río y a la selva. Posta de bagre fresco de pesca artesanal, cocida lentamente en un sofrito profundo de tomate, cebolla, ajo y especias tropicales. La carne suave del bagre absorbe todos los sabores de la salsa, creando un plato con identidad propia y reminiscencias de la cocina ribereña colombiana. Servida con arroz con coco y patacones crujientes."
-        },
-        "en": {
-          "name": "Catfish Steak",
-          "shortDescription": "River catfish prepared in a clay pot with house sofrito and tropical herbs.",
-          "fullDescription": "A tribute to the river and the jungle. Fresh artisanal catfish steak, slowly cooked in a deep sofrito of tomato, onion, garlic and tropical spices. The tender catfish flesh absorbs all the flavors of the sauce, creating a dish with its own identity and reminiscences of Colombian riverside cuisine. Served with coconut rice and crispy patacones."
-        }
-      }
-    },
-    {
-      "id": "mar_y_tierra",
-      "category": "Principales",
-      "imagePath": "assets/images/img/05-TITULO-MARYTIERRA@2x.png",
-      "has3dModel": true,
-      "glbAssetPath": "assets/images/08-Mar-y-Tierra.glb",
-      "translations": {
-        "es": {
-          "name": "Mar y Tierra",
-          "shortDescription": "Camarón y carne en un dueto perfecto sobre salsa de reducción.",
-          "fullDescription": "El encuentro del océano y la tierra en un solo plato. Medallón de res de corte premium junto a camarones tigre salteados con mantequilla de ajo y limón, sobre una cama de risotto de champiñones silvestres y una reducción de vino tinto con hierbas aromáticas. Dos mundos que se fusionan en perfecta armonía gastronómica."
-        },
-        "en": {
-          "name": "Surf and Turf",
-          "shortDescription": "Shrimp and beef in a perfect duet over a reduction sauce.",
-          "fullDescription": "The meeting of the ocean and the land in a single dish. Premium-cut beef medallion alongside tiger shrimp sautéed in garlic butter and lemon, over a bed of wild mushroom risotto and a red wine and aromatic herb reduction. Two worlds merging in perfect gastronomic harmony."
         }
       }
     },
@@ -134,101 +77,6 @@
       }
     },
     {
-      "id": "langostinos_ajillo",
-      "category": "Mariscos",
-      "imagePath": "assets/images/img/12-TITULO-LANGOSTINOS-AL-AJILLO@2x.png",
-      "has3dModel": true,
-      "glbAssetPath": "assets/images/10-Langostinos-al-ajilo.glb",
-      "translations": {
-        "es": {
-          "name": "Langostinos al Ajillo Cremoso",
-          "shortDescription": "Langostinos jumbo salteados en mantequilla de ajo con crema y limón.",
-          "fullDescription": "La nobleza del mar en toda su expresión. Langostinos jumbo de talla premium, salteados vivos en mantequilla dorada con ajo brunoise, vino blanco seco, crema de leche y un toque de limón de Castilla. La salsa cremosa resultante es un regalo para los sentidos. Servidos sobre linguini al dente con aceite de oliva extra virgen y perejil fresco."
-        },
-        "en": {
-          "name": "Creamy Garlic Prawns",
-          "shortDescription": "Jumbo prawns sautéed in garlic butter with cream and citrus.",
-          "fullDescription": "The nobility of the sea in full expression. Premium jumbo prawns, sautéed alive in golden butter with brunoise garlic, dry white wine, heavy cream and a touch of Castilian lemon. The resulting cream sauce is a gift to the senses. Served over al dente linguini with extra virgin olive oil and fresh parsley."
-        }
-      }
-    },
-    {
-      "id": "pizza",
-      "category": "Principales",
-      "imagePath": "assets/images/img/08-PIZZA-MARGARITA_1@2x.png",
-      "has3dModel": true,
-      "glbAssetPath": "assets/images/11-Pizza.glb",
-      "translations": {
-        "es": {
-          "name": "Pizza de la Casa",
-          "shortDescription": "Masa artesanal horneada en piedra con ingredientes frescos de temporada.",
-          "fullDescription": "Nuestra pizza artesanal nace de una masa madre fermentada 48 horas, extendida a mano y horneada en piedra volcánica a alta temperatura. Cubierta con salsa de tomate San Marzano, mozzarella fresca di bufala y una selección de ingredientes premium de temporada. Crujiente por fuera, suave por dentro: el equilibrio perfecto que solo da el tiempo y la técnica."
-        },
-        "en": {
-          "name": "House Pizza",
-          "shortDescription": "Artisanal stone-baked crust with fresh seasonal ingredients.",
-          "fullDescription": "Our artisanal pizza is born from a sourdough fermented for 48 hours, hand-stretched and baked on volcanic stone at high temperature. Topped with San Marzano tomato sauce, fresh buffalo mozzarella and a selection of premium seasonal ingredients. Crispy outside, soft inside: the perfect balance that only time and technique can achieve."
-        }
-      }
-    },
-    {
-      "id": "crema_de_la_reina",
-      "category": "Sopas",
-      "imagePath": "assets/images/img/03-TITULO-CREMA-DE-LA-REINA@2x.png",
-      "has3dModel": true,
-      "glbAssetPath": "assets/images/12-Crema-de-la-reina.glb",
-      "translations": {
-        "es": {
-          "name": "Crema de la Reina",
-          "shortDescription": "Crema aterciopelada con pollo desmechado, alcaparras y un toque de crema agria.",
-          "fullDescription": "Un clásico de la alta cocina colombiana que merece su nombre. Base de caldo de pollo reducido, enriquecida con crema de leche, papa criolla, alcaparras pequeñas y pollo desmechado de cocción lenta. Su textura aterciopelada y su sabor profundo y reconfortante la convierten en la apertura perfecta para cualquier menú. Servida con pan de queso recién horneado."
-        },
-        "en": {
-          "name": "Crema de la Reina",
-          "shortDescription": "Velvety cream soup with shredded chicken, capers and a touch of sour cream.",
-          "fullDescription": "A classic of Colombian haute cuisine that deserves its name. Reduced chicken stock base, enriched with heavy cream, criolla potato, small capers and slow-cooked shredded chicken. Its velvety texture and deep, comforting flavor make it the perfect opening for any menu. Served with freshly baked cheese bread."
-        }
-      }
-    },
-    {
-      "id": "desayuno_saludable",
-      "category": "Desayunos",
-      "imagePath": "assets/images/img/01-Desayuno-Saludable.png",
-      "has3dModel": false,
-      "glbAssetPath": "",
-      "translations": {
-        "es": {
-          "name": "Desayuno Saludable",
-          "shortDescription": "Frutas frescas de temporada, granola artesanal, yogur natural y jugo de naranja.",
-          "fullDescription": "Una propuesta ligera y nutritiva para comenzar el día con energía. Frutas frescas de temporada seleccionadas cada mañana, granola artesanal tostada con miel y canela, yogur natural cremoso y un vaso de jugo de naranja recién exprimido. El equilibrio perfecto entre sabor y bienestar."
-        },
-        "en": {
-          "name": "Healthy Breakfast",
-          "shortDescription": "Fresh seasonal fruits, artisan granola, natural yogurt and orange juice.",
-          "fullDescription": "A light and nutritious option to start the day with energy. Fresh seasonal fruits selected every morning, artisan granola toasted with honey and cinnamon, creamy natural yogurt and a glass of freshly squeezed orange juice. The perfect balance between flavor and wellness."
-        }
-      }
-    },
-    {
-      "id": "pastas_de_la_casa",
-      "category": "Principales",
-      "imagePath": "assets/images/img/09-TITULO-PASTA-DE-LA-CASA@2x.png",
-      "has3dModel": false,
-      "glbAssetPath": "",
-      "translations": {
-        "es": {
-          "name": "Pastas de la Casa",
-          "shortDescription": "Pasta fresca con salsa de la casa, ingredientes del día y queso parmesano.",
-          "fullDescription": "Nuestra pasta de la casa es elaborada con receta propia, combinando ingredientes frescos del día con una salsa que varía según la temporada. Terminada con queso parmesano rallado al momento y un toque de hierbas aromáticas frescas. Un plato reconfortante con carácter propio."
-        },
-        "en": {
-          "name": "House Pasta",
-          "shortDescription": "Fresh pasta with house sauce, daily ingredients and parmesan cheese.",
-          "fullDescription": "Our house pasta is made with our own recipe, combining fresh daily ingredients with a sauce that varies by season. Finished with freshly grated parmesan cheese and a touch of fresh aromatic herbs. A comforting dish with its own character."
-        }
-      }
-    },
-    {
       "id": "mojito_cubano",
       "category": "Bebidas",
       "imagePath": "assets/images/img/13-TITULO-MOJITO@2x.png",
@@ -244,25 +92,6 @@
           "name": "Cuban Mojito",
           "shortDescription": "White rum, fresh mint, lime, sugar and soda over crushed ice.",
           "fullDescription": "The most iconic drink of the tropics, prepared faithfully to the original Havana recipe. Aged white rum, fresh mint gently muddled to release its essential oils, natural lime juice, cane sugar and sparkling soda over a bed of crushed ice. Refreshing, aromatic and with that balance between citrus and herbal notes that makes it irresistible."
-        }
-      }
-    },
-    {
-      "id": "margarita_frozen",
-      "category": "Bebidas",
-      "imagePath": "assets/images/img/14-TITULO-MARGARITA@2x.png",
-      "has3dModel": false,
-      "glbAssetPath": "",
-      "translations": {
-        "es": {
-          "name": "Margarita Frozen",
-          "shortDescription": "Tequila, triple sec, limón y hielo triturado en versión frozen.",
-          "fullDescription": "La clásica margarita elevada a su versión más refrescante. Tequila de calidad, triple sec, jugo de limón natural y hielo triturado en la licuadora hasta obtener una textura suave y helada. Servida en vaso escarchado con sal en el borde y una rodaja de limón. Perfecta para el calor tropical de Malokas."
-        },
-        "en": {
-          "name": "Frozen Margarita",
-          "shortDescription": "Tequila, triple sec, lime and crushed ice in frozen style.",
-          "fullDescription": "The classic margarita elevated to its most refreshing version. Quality tequila, triple sec, natural lime juice and crushed ice blended to a smooth, icy texture. Served in a frosted glass with a salted rim and a lime slice. Perfect for the tropical heat at Malokas."
         }
       }
     }
