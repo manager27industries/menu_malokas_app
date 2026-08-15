@@ -20,44 +20,6 @@
       }
     },
     {
-      "id": "pollo_ajillo_cremoso",
-      "category": "Principales",
-      "imagePath": "assets/images/img/04-TITULO-POLLO-AL-AJILLO@2x.png",
-      "has3dModel": true,
-      "glbAssetPath": "assets/images/03-Pollo-ajillo-cremoso.glb",
-      "translations": {
-        "es": {
-          "name": "Pollo al Ajillo Cremoso",
-          "shortDescription": "Pechuga jugosa bañada en una crema de ajo dorado y hierbas frescas.",
-          "fullDescription": "Una preparación clásica elevada a nivel gourmet. Pechuga de pollo sellada a fuego perfecto, cubierta con una salsa cremosa de ajo dorado, vino blanco seco, crema de leche y hierbas frescas de la huerta. Servida sobre puré de papa cremoso con mantequilla de trufa y guarnición de vegetales al vapor. El equilibrio perfecto entre confort y elegancia."
-        },
-        "en": {
-          "name": "Creamy Garlic Chicken",
-          "shortDescription": "Juicy chicken breast bathed in a golden garlic cream with fresh herbs.",
-          "fullDescription": "A classic preparation elevated to gourmet level. Perfectly seared chicken breast covered in a creamy sauce of golden garlic, dry white wine, heavy cream and fresh garden herbs. Served over creamy truffle butter mashed potatoes with steamed vegetable garnish. The perfect balance between comfort and elegance."
-        }
-      }
-    },
-    {
-      "id": "punta_de_anca",
-      "category": "Principales",
-      "imagePath": "assets/images/img/07-TITULO-PUNTA-DE-ANCA@2x.png",
-      "has3dModel": true,
-      "glbAssetPath": "assets/images/06-Punta-de-anca-argentina.glb",
-      "translations": {
-        "es": {
-          "name": "Punta de Anca",
-          "shortDescription": "Carne argentina de exportación, porción de 300g o 600g con guarniciones del día.",
-          "fullDescription": "Elaborada con la mejor carne de exportación, este plato lo puedes pedir por porción de 300 gramos o porción de 600 gramos, acompañado de ensalada verde de la casa y dos guarniciones más del día. La Punta de Anca argentina, también conocida como Coulotte, se caracteriza por su capa de grasa que le otorga jugosidad excepcional y un sabor profundo e inigualable en cada bocado."
-        },
-        "en": {
-          "name": "Argentine Coulotte",
-          "shortDescription": "Premium export-grade Argentine beef, 300g or 600g with daily side dishes.",
-          "fullDescription": "Made with the finest export-grade beef, this dish can be ordered in a 300-gram or 600-gram portion, accompanied by house green salad and two additional daily side dishes. The Argentine Coulotte is characterized by its fat cap that gives it exceptional juiciness and a deep, unmatched flavor in every bite."
-        }
-      }
-    },
-    {
       "id": "cazuela_mariscos",
       "category": "Mariscos",
       "imagePath": "assets/images/img/11-TITULO-CAZUELA-DE-MARISCOS@2x.png",

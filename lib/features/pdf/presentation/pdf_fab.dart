@@ -8,7 +8,7 @@ import '../../../core/providers/locale_provider.dart';
 import 'pdf_providers.dart';
 import 'pdf_viewer_dialog.dart';
 
-/// FAB premium para abrir el menú PDF desde Firebase Storage.
+/// FAB premium para abrir el menú PDF (Vercel Blob).
 ///
 /// Obtiene la URL de descarga vigente vía [pdfUrlProvider] y la abre:
 ///   • Android → Google Docs Viewer (dentro de la app)

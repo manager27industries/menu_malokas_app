@@ -1,3 +1,8 @@
+# Node / Vercel
+node_modules/
+.env
+.env.local
+
 # Miscellaneous
 *.class
 *.log

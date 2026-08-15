@@ -1,29 +1,33 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:http/http.dart' as http;
 
-import '../../../core/constants/supabase_config.dart';
+import '../../../core/constants/api_config.dart';
 import '../domain/pdf_repository.dart';
 
-/// Implementación de [PdfRepository] usando Supabase Storage.
-///
-/// Los PDFs se almacenan en el bucket [SupabaseConfig.bucket]:
-///   menu_es.pdf
-///   menu_en.pdf
+/// PDFs en Vercel Blob (`/api/pdf`).
 class PdfRepositoryImpl implements PdfRepository {
   PdfRepositoryImpl(this._client);
 
-  final SupabaseClient _client;
+  final http.Client _client;
 
-  SupabaseStorageClient get _storage => _client.storage;
+  Uri _uri(String langCode) => Uri.parse(
+        '${ApiConfig.baseUrl}/api/pdf?lang=${langCode == 'en' ? 'en' : 'es'}',
+      );
 
   @override
   Future<String> getPdfUrl(String langCode) async {
-    final path = SupabaseConfig.storagePath(langCode);
-    final url = _storage.from(SupabaseConfig.bucket).getPublicUrl(path);
-    // Verifica existencia con list() — mucho más ligero que download().
-    final files = await _storage.from(SupabaseConfig.bucket).list();
-    if (!files.any((f) => f.name == path)) {
+    final response = await _client.get(_uri(langCode));
+    if (response.statusCode == 404) {
+      throw PdfNotFoundException(langCode);
+    }
+    if (response.statusCode != 200) {
+      throw Exception('No se pudo consultar el PDF (${response.statusCode}).');
+    }
+    final body = jsonDecode(response.body) as Map<String, dynamic>;
+    final url = body['url'] as String?;
+    if (url == null || url.isEmpty) {
       throw PdfNotFoundException(langCode);
     }
     return url;
@@ -31,15 +35,16 @@ class PdfRepositoryImpl implements PdfRepository {
 
   @override
   Future<void> uploadPdf(String langCode, Uint8List bytes) async {
-    final path = SupabaseConfig.storagePath(langCode);
-    await _storage.from(SupabaseConfig.bucket).uploadBinary(
-          path,
-          bytes,
-          fileOptions: const FileOptions(
-            contentType: 'application/pdf',
-            upsert: true, // sobreescribe si ya existe
-          ),
-        );
+    final response = await _client.put(
+      _uri(langCode),
+      headers: {'Content-Type': 'application/pdf'},
+      body: bytes,
+    );
+    if (response.statusCode == 401) {
+      throw Exception('Sesión expirada. Vuelve a iniciar sesión.');
+    }
+    if (response.statusCode != 200) {
+      throw Exception('No se pudo subir el PDF (${response.statusCode}).');
+    }
   }
 }
-

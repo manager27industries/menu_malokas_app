@@ -1,0 +1,10 @@
+{
+  "installCommand": "npm install",
+  "buildCommand": "bash scripts/vercel-build.sh",
+  "outputDirectory": "build/web",
+  "rewrites": [
+    { "source": "/menu/:path*", "destination": "/index.html" },
+    { "source": "/menu", "destination": "/index.html" },
+    { "source": "/admin", "destination": "/index.html" }
+  ]
+}

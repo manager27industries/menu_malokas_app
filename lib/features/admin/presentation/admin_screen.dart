@@ -8,7 +8,7 @@ import 'admin_providers.dart';
 import 'widgets/login_form.dart';
 import 'widgets/pdf_uploader_card.dart';
 
-/// Pantalla de administración — solo accesible con credenciales Firebase.
+/// Pantalla de administración — login contra `/api/login` (Vercel).
 ///
 /// Flujo:
 ///   [No autenticado] → LoginForm
