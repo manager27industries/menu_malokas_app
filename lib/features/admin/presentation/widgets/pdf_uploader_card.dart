@@ -83,6 +83,12 @@ class PdfUploaderCard extends ConsumerWidget {
               ),
             ),
 
+            const SizedBox(height: 6),
+            Text(
+              'Máximo 4 MB por archivo.',
+              style: TextStyle(fontSize: 12, color: Colors.orange.shade800),
+            ),
+
             const SizedBox(height: AppSpacing.md),
             const Divider(),
             const SizedBox(height: AppSpacing.md),

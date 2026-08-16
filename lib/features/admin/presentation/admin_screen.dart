@@ -165,7 +165,9 @@ class _AdminPanel extends ConsumerWidget {
                       Text(
                         '1. Selecciona el idioma que deseas actualizar.\n'
                         '2. Haz clic en "Seleccionar PDF" y elige el archivo.\n'
-                        '3. El menú se actualiza automáticamente en la app.',
+                        '3. El menú se actualiza automáticamente en la app.\n\n'
+                        'Importante: el PDF no puede pesar más de 4 MB. '
+                        'Si pesa más, la subida falla. Comprímelo antes de subirlo.',
                         style: TextStyle(fontSize: 13, height: 1.6),
                       ),
                     ],

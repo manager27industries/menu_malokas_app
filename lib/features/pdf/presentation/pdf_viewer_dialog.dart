@@ -14,16 +14,25 @@ class PdfViewerDialog extends StatefulWidget {
   final String url;
   final String title;
 
+  static bool _isOpen = false;
+
   static Future<void> show(
     BuildContext context, {
     required String url,
     required String title,
-  }) {
-    return showDialog<void>(
-      context: context,
-      barrierColor: Colors.black.withValues(alpha: 0.55),
-      builder: (_) => PdfViewerDialog(url: url, title: title),
-    );
+  }) async {
+    if (_isOpen) return;
+    _isOpen = true;
+    try {
+      await showDialog<void>(
+        context: context,
+        barrierDismissible: true,
+        barrierColor: Colors.black.withValues(alpha: 0.55),
+        builder: (_) => PdfViewerDialog(url: url, title: title),
+      );
+    } finally {
+      _isOpen = false;
+    }
   }
 
   static Future<void> warmupWebPdf(String url) {

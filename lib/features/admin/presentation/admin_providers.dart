@@ -34,6 +34,14 @@ class UploadNotifier extends StateNotifier<UploadState> {
         state = const UploadIdle();
         return;
       }
+      const maxBytes = 4 * 1024 * 1024;
+      if (bytes.length > maxBytes) {
+        state = const UploadError(
+          'El PDF pesa demasiado. Debe ser de 4 MB o menos. '
+          'Comprímelo o redúcelo e inténtalo de nuevo.',
+        );
+        return;
+      }
       await _pdfRepo.uploadPdf(langCode, bytes);
       _ref.invalidate(pdfUrlProvider(langCode));
       state = const UploadSuccess();

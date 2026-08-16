@@ -24,6 +24,7 @@ class _PdfFabState extends ConsumerState<PdfFab>
     with SingleTickerProviderStateMixin {
   late final AnimationController _pulseCtrl;
   late final Animation<double> _pulseAnim;
+  bool _opening = false;
 
   @override
   void initState() {
@@ -55,11 +56,15 @@ class _PdfFabState extends ConsumerState<PdfFab>
   }
 
   Future<void> _openPdf(String lang) async {
+    if (_opening) return;
+    setState(() => _opening = true);
+
     late final String url;
     try {
       url = await ref.refresh(pdfUrlProvider(lang).future);
     } catch (_) {
       if (mounted) {
+        setState(() => _opening = false);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
               content: Text('El menú PDF aún no está disponible.')),
@@ -71,7 +76,11 @@ class _PdfFabState extends ConsumerState<PdfFab>
     if (!mounted) return;
 
     final title = lang == 'en' ? 'PDF Menu' : 'Menú PDF';
-    await PdfViewerDialog.show(context, url: url, title: title);
+    try {
+      await PdfViewerDialog.show(context, url: url, title: title);
+    } finally {
+      if (mounted) setState(() => _opening = false);
+    }
   }
 
   @override
@@ -82,46 +91,62 @@ class _PdfFabState extends ConsumerState<PdfFab>
     final pdfUrlAsync = ref.watch(pdfUrlProvider(lang));
     pdfUrlAsync.whenData(PdfViewerDialog.warmupWebPdf);
 
+    final loadingLabel = lang == 'en' ? 'Opening…' : 'Abriendo…';
+
     return ScaleTransition(
       scale: _pulseAnim,
       child: GestureDetector(
-        onTap: () => _openPdf(lang),
-        child: Container(
-          height: 56,
-          padding: const EdgeInsets.symmetric(horizontal: 22),
-          decoration: BoxDecoration(
-            color: AppColors.darkGreen,
-            borderRadius: BorderRadius.circular(AppRadius.fab),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.darkGreen.withValues(alpha: 0.35),
-                blurRadius: 18,
-                offset: const Offset(0, 6),
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Transform.rotate(
-                angle: -math.pi / 180 * 5,
-                child: const Icon(
-                  Icons.picture_as_pdf_rounded,
-                  color: AppColors.textOnDark,
-                  size: 20,
+        onTap: _opening ? null : () => _openPdf(lang),
+        child: AnimatedOpacity(
+          duration: const Duration(milliseconds: 200),
+          opacity: _opening ? 0.85 : 1,
+          child: Container(
+            height: 56,
+            padding: const EdgeInsets.symmetric(horizontal: 22),
+            decoration: BoxDecoration(
+              color: AppColors.darkGreen,
+              borderRadius: BorderRadius.circular(AppRadius.fab),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.darkGreen.withValues(alpha: 0.35),
+                  blurRadius: 18,
+                  offset: const Offset(0, 6),
                 ),
-              ),
-              const SizedBox(width: 10),
-              Text(
-                label,
-                style: const TextStyle(
-                  color: AppColors.textOnDark,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.4,
+              ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (_opening)
+                  const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2.2,
+                      color: AppColors.textOnDark,
+                    ),
+                  )
+                else
+                  Transform.rotate(
+                    angle: -math.pi / 180 * 5,
+                    child: const Icon(
+                      Icons.picture_as_pdf_rounded,
+                      color: AppColors.textOnDark,
+                      size: 20,
+                    ),
+                  ),
+                const SizedBox(width: 10),
+                Text(
+                  _opening ? loadingLabel : label,
+                  style: const TextStyle(
+                    color: AppColors.textOnDark,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.4,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
