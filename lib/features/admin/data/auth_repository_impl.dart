@@ -22,7 +22,12 @@ class AuthRepositoryImpl implements AuthRepository {
       final response = await _client.get(
         Uri.parse('${ApiConfig.baseUrl}/api/session'),
       );
-      _authed = response.statusCode == 200;
+      if (response.statusCode != 200) {
+        _authed = false;
+      } else {
+        final body = jsonDecode(response.body) as Map<String, dynamic>;
+        _authed = body['ok'] == true;
+      }
     } catch (_) {
       _authed = false;
     }

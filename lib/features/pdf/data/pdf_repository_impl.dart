@@ -23,7 +23,7 @@ class PdfRepositoryImpl implements PdfRepository {
       throw PdfNotFoundException(langCode);
     }
     if (response.statusCode != 200) {
-      throw Exception('No se pudo consultar el PDF (${response.statusCode}).');
+      throw Exception(_apiError(response, 'No se pudo consultar el PDF'));
     }
     final body = jsonDecode(response.body) as Map<String, dynamic>;
     final url = body['url'] as String?;
@@ -44,7 +44,17 @@ class PdfRepositoryImpl implements PdfRepository {
       throw Exception('Sesión expirada. Vuelve a iniciar sesión.');
     }
     if (response.statusCode != 200) {
-      throw Exception('No se pudo subir el PDF (${response.statusCode}).');
+      throw Exception(_apiError(response, 'No se pudo subir el PDF'));
     }
+  }
+
+  String _apiError(http.Response response, String fallback) {
+    try {
+      final body = jsonDecode(response.body);
+      if (body is Map && body['error'] is String) {
+        return body['error'] as String;
+      }
+    } catch (_) {}
+    return '$fallback (${response.statusCode}).';
   }
 }

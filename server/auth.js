@@ -28,16 +28,20 @@ function parseCookies(req) {
 }
 
 function isAuthed(req) {
-  const token = parseCookies(req)[COOKIE];
-  if (!token || !token.includes('.')) return false;
-  const [expRaw, sig] = token.split('.');
-  const exp = Number(expRaw);
-  if (!Number.isFinite(exp) || Date.now() > exp) return false;
-  const expected = createHmac('sha256', secret()).update(expRaw).digest('hex');
-  const a = Buffer.from(sig);
-  const b = Buffer.from(expected);
-  if (a.length !== b.length) return false;
-  return timingSafeEqual(a, b);
+  try {
+    const token = parseCookies(req)[COOKIE];
+    if (!token || !token.includes('.')) return false;
+    const [expRaw, sig] = token.split('.');
+    const exp = Number(expRaw);
+    if (!Number.isFinite(exp) || Date.now() > exp) return false;
+    const expected = createHmac('sha256', secret()).update(expRaw).digest('hex');
+    const a = Buffer.from(sig);
+    const b = Buffer.from(expected);
+    if (a.length !== b.length) return false;
+    return timingSafeEqual(a, b);
+  } catch {
+    return false;
+  }
 }
 
 function setSessionCookie(res) {

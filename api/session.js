@@ -8,7 +8,7 @@ module.exports = async function handler(req, res) {
     return;
   }
   if (!isAuthed(req)) {
-    res.status(401).json({ ok: false });
+    res.status(200).json({ ok: false });
     return;
   }
   res.status(200).json({ ok: true });
