@@ -8,4 +8,4 @@ fi
 
 flutter config --no-analytics --enable-web
 flutter pub get
-flutter build web --release
+flutter build web --release --no-web-resources-cdn
